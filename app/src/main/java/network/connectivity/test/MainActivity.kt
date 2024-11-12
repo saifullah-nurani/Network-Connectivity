@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
+import io.github.nurani.network.connectivity.ConnectivityObserver
 import io.github.nurani.network.connectivity.connectivityObserver
 import io.github.nurani.network.state.R
 import io.github.nurani.network.state.databinding.ActivityMainBinding
@@ -28,5 +29,11 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         connectivityObserver(lifecycle, Lifecycle.State.RESUMED, viewModel::onChangeNetwork)
+        object :ConnectivityObserver(this){
+            override fun onChange(state: Int, networkType: Int) {
+
+            }
+        }
+        connectivityObserver { state, networkType ->  }
     }
 }

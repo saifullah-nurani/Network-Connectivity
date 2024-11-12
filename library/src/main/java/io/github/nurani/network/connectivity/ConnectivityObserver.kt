@@ -54,7 +54,7 @@ abstract class ConnectivityObserver(private val context: Context) {
      * @param state The current network state (e.g., AVAILABLE, UNAVAILABLE).
      * @param networkType The type of the current network (e.g., WIFI, MOBILE).
      */
-    abstract fun onChange(@NetworkState state: Int, @NetworkType networkType: Int)
+    protected abstract fun onChange(@NetworkState state: Int, @NetworkType networkType: Int)
 
     /**
      * Starts observing network connectivity changes. Registers the appropriate
@@ -117,7 +117,7 @@ abstract class ConnectivityObserver(private val context: Context) {
      */
     @RequiresPermission(Manifest.permission.ACCESS_NETWORK_STATE)
     @Suppress("DEPRECATION")
-    fun getNetworkType(): Int {
+    internal fun getNetworkType(): Int {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // For API 23 (Marshmallow) and above, use network capabilities
             val network = connectivityManager.activeNetwork ?: return NONE
@@ -183,6 +183,10 @@ abstract class ConnectivityObserver(private val context: Context) {
         // This ensures that network connectivity changes are handled by this specific observer instance.
         override val connectivityObserver: ConnectivityObserver
             get() = this@ConnectivityObserver
+
+        override fun onChange(state: Int, networkType: Int) {
+            this@ConnectivityObserver.onChange(state, networkType)
+        }
     }
 
 }

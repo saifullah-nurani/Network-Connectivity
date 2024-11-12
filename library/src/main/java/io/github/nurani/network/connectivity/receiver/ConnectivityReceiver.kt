@@ -7,8 +7,10 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import androidx.annotation.RequiresPermission
 import io.github.nurani.network.connectivity.ConnectivityObserver
+import io.github.nurani.network.connectivity.NetworkState
 import io.github.nurani.network.connectivity.NetworkState.Companion.AVAILABLE
 import io.github.nurani.network.connectivity.NetworkState.Companion.UNAVAILABLE
+import io.github.nurani.network.connectivity.NetworkType
 import io.github.nurani.network.connectivity.NetworkType.Companion.NONE
 
 /**
@@ -34,6 +36,9 @@ internal abstract class ConnectivityReceiver : BroadcastReceiver() {
     /** The observer responsible for handling network connectivity changes. */
     abstract val connectivityObserver: ConnectivityObserver
 
+    /** Method to handle network state changes. */
+    abstract fun onChange(@NetworkState state: Int, @NetworkType networkType: Int)
+
     /**
      * Triggered when there is a change in network connectivity.
      *
@@ -53,9 +58,9 @@ internal abstract class ConnectivityReceiver : BroadcastReceiver() {
 
             // If no network is detected, notify observer with UNAVAILABLE state; otherwise, notify as AVAILABLE
             if (networkType == NONE) {
-                connectivityObserver.onChange(UNAVAILABLE, NONE)
+                onChange(UNAVAILABLE, NONE)
             } else {
-                connectivityObserver.onChange(AVAILABLE, networkType)
+                onChange(AVAILABLE, networkType)
             }
         }
     }

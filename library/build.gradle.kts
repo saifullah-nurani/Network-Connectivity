@@ -38,7 +38,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
 }
 mavenPublishing {
-    coordinates("io.github.saifullah-nurani", "library", "1.0.0")
+    coordinates("io.github.saifullah-nurani", "network-connectivity", "1.0.0")
     pom {
         name.set("Network Connectivity")
         description.set("Network Connectivity is an easy-to-integrate Android library designed to provide real-time updates on network connectivity status and type changes. Whether your app needs to detect when a user goes offline, switches from Wi-Fi to mobile data, or encounters any connectivity changes, this library simplifies the process by delivering reliable connectivity insights directly to your app’s logic.")
