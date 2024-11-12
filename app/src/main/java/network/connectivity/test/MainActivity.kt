@@ -29,11 +29,5 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         connectivityObserver(lifecycle, Lifecycle.State.RESUMED, viewModel::onChangeNetwork)
-        object :ConnectivityObserver(this){
-            override fun onChange(state: Int, networkType: Int) {
-
-            }
-        }
-        connectivityObserver { state, networkType ->  }
     }
 }
